@@ -26,7 +26,6 @@ namespace APBD_2Test_2.Controllers
         [HttpGet("clientId")]
         public IActionResult GetClients(int clientId)
         {
-            var client = context.Clients.Where(c => c.IdClient == clientId);
 
             var clients = context.Clients.Join(
                 context.ClientOrders,
@@ -36,10 +35,12 @@ namespace APBD_2Test_2.Controllers
                 {
                     IdClient = client.IdClient,
                     FirstName = client.FirstName,
+                    LastName = client.LastName,
                     Order = order.IdClientOrder
                 });
-
-            return Ok(clients);
+            var client = clients.Where(c => c.IdClient == clientId);
+            
+            return Ok(client); ;
         }
 
 
